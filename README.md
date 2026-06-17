@@ -778,6 +778,6 @@ Telemetry is automatically disabled in CI environments.
 - [Trae Skills Documentation](https://docs.trae.ai/ide/skills)
 - [Vercel Agent Skills Repository](https://github.com/vercel-labs/agent-skills)
 
-## License
+## License 
 
 MIT
