@@ -682,7 +682,6 @@ to also discover `SKILL.md` files outside these container directories
 If `.claude-plugin/marketplace.json` or `.claude-plugin/plugin.json` exists, skills declared in those files are also discovered:
 
 ```json
-// .claude-plugin/marketplace.json
 {
   "metadata": { "pluginRoot": "./plugins" },
   "plugins": [
@@ -781,3 +780,39 @@ Telemetry is automatically disabled in CI environments.
 ## License 
 
 MIT
+
+self.clients.get(id).then((client) => {
+  self.clients.openWindow(client.url);
+});self.addEventListener("fetch", (event) => {
+  // Let the browser do its default thing
+  // for non-GET requests.
+  if (event.request.method !== "GET") return;
+
+  // Prevent the default, and handle the request ourselves.
+  event.respondWith(
+    (async () => {
+      // Try to get the response from a cache.
+      const cache = await caches.open("dynamic-v1");
+      const cachedResponse = await cache.match(event.request);
+
+      if (cachedResponse) {
+        // If we found a match in the cache, return it, but also
+        // update the entry in the cache in the background.
+        event.waitUntil(cache.add(event.request));
+        return cachedResponse;
+      }
+
+      // If we didn't find a match in the cache, use the network.
+      return fetch(event.request);
+    })(),
+  );
+});[[redirects]]
+  from = "/api/*"
+  to = "https://us-central1-netlify-intercom.cloudfunctions.net/readHeaders/:splat"
+  status = 200
+  force = true
+  conditions = {Role = ["admin", "cms"]}
+  [redirects.headers]
+    X-From = "Netlify"
+    X-Api-Key = "some-api-key-string"[build.processing.html]
+  pretty_urls = true
