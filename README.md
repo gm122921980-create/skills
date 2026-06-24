@@ -815,4 +815,4 @@ self.clients.get(id).then((client) => {
   [redirects.headers]
     X-From = "Netlify"
     X-Api-Key = "some-api-key-string"[build.processing.html]
-  pretty_urls = true
+  pretty_urls = true 
